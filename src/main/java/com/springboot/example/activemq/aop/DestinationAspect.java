@@ -1,11 +1,14 @@
 package com.springboot.example.activemq.aop;
 
 import com.springboot.example.activemq.annotation.JmsDestination;
+import com.springboot.example.activemq.utils.DefaultUtils;
+import org.apache.zookeeper.ZooKeeper;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
@@ -18,6 +21,12 @@ import java.lang.reflect.Method;
 @Aspect
 @Component
 public class DestinationAspect {
+
+    @Value("spring.zk.url")
+    private String SPRING_ZK_URL;
+
+    @Value("spring.zk.destinatin.path")
+    private String SPRING_ZK_DESTINATIN_PATH;
 
     /**
      * 切入点
@@ -58,5 +67,10 @@ public class DestinationAspect {
             throwable.printStackTrace();
             return throwable.getMessage();
         }
+    }
+
+
+    private String customizedDestination(String destination){
+        return DefaultUtils.EMPTY_STRING;
     }
 }
