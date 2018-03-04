@@ -1,4 +1,4 @@
-package com.springboot.example.zookeeper;
+package com.springboot.example.zookeeper.service;
 
 import org.apache.curator.framework.CuratorFramework;
 
@@ -7,10 +7,10 @@ import org.apache.curator.framework.CuratorFramework;
  * @Date 2018/3/3
  * @Description ZK监听器
  */
-public interface ZooKeeperListener {
+public interface ZooKeeperService {
     /**
      * 监听zk，需要执行的操作
      * @param client
      */
-    void executor(CuratorFramework client);
+    void execute(CuratorFramework client);
 }
