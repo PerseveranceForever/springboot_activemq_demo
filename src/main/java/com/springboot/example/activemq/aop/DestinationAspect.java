@@ -22,11 +22,11 @@ import java.lang.reflect.Method;
 @Component
 public class DestinationAspect {
 
-    @Value("spring.zk.url")
-    private String SPRING_ZK_URL;
+    @Value("${spring.zk.url}")
+    private String zookeeperUrl;
 
-    @Value("spring.zk.destinatin.path")
-    private String SPRING_ZK_DESTINATIN_PATH;
+    @Value("${spring.zk.destination.path}")
+    private String destinationPath;
 
     /**
      * 切入点
