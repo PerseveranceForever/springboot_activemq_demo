@@ -16,7 +16,6 @@ import javax.jms.Destination;
 public class JmsProducer {
     @Autowired
     private JmsTemplate jmsTemplate;
-    @JmsDestination("123")
     public void sendMessage(Destination destination, String message) {
         this.jmsTemplate.convertAndSend(destination,message);
     }

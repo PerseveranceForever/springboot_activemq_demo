@@ -17,7 +17,7 @@ import javax.jms.MessageListener;
 public class JmsConsumer implements MessageListener {
     private final static Logger logger = LoggerFactory.getLogger(JmsConsumer.class);
 
-    @JmsListener(destination = "springboot.queue.test")
+    @JmsListener(destination = "my_test_mq_destination")
     @Override
     public void onMessage(Message message) {
         logger.info("接收到消息：{}",message);

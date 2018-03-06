@@ -1,5 +1,6 @@
 package com.springboot.example.activemq;
 
+import com.springboot.example.activemq.annotation.JmsDestination;
 import com.springboot.example.activemq.producer.JmsProducer;
 import org.apache.activemq.command.ActiveMQQueue;
 import org.junit.Test;
@@ -23,7 +24,8 @@ public class JmsTest {
 
     @Test
     public void testJms() {
-        Destination destination = new ActiveMQQueue("springboot.queue.test");
+        @JmsDestination
+        Destination destination = new ActiveMQQueue("my_test_mq_destination");
 
         for (int i=0;i<10;i++) {
             jmsProducer.sendMessage(destination,"hello,world!" + i);

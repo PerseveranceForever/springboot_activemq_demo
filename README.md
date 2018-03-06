@@ -16,3 +16,7 @@
 * ./zkServer.sh stop
 * ./zkServer.sh restart
 * ./zkServer.sh status
+
+# Redis安装和启动
+1.下载：https://redis.io/
+2.启动：redis-server */redis.conf

@@ -1,17 +1,30 @@
 package com.springboot.example.activemq.aop;
 
 import com.springboot.example.activemq.annotation.JmsDestination;
-import com.springboot.example.activemq.utils.DefaultUtils;
-import org.apache.zookeeper.ZooKeeper;
+import com.springboot.example.activemq.model.Version;
+import com.springboot.example.activemq.service.DestinationService;
+import com.springboot.example.activemq.utils.CommonUtils;
+import com.springboot.example.activemq.service.ZookeeperService;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
+import javax.jms.Destination;
+import javax.jms.Topic;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
+import java.util.Map;
 
 /**
  * @Author zhouguanya
@@ -22,12 +35,22 @@ import java.lang.reflect.Method;
 @Component
 public class DestinationAspect {
 
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Value("${spring.zk.url}")
     private String zookeeperUrl;
 
     @Value("${spring.zk.destination.path}")
     private String destinationPath;
 
+    @Autowired
+    private RedisTemplate redisTemplate;
+
+    @Resource(name = "destinationService")
+    private DestinationService destinationService;
+
+    @Resource(name = "zookeeperService")
+    private ZookeeperService zookeeperService;
     /**
      * 切入点
      */
@@ -44,21 +67,42 @@ public class DestinationAspect {
      * @return
      */
     @Around(value = "pointcut() && @annotation(jmsDestination)", argNames="point,jmsDestination")
-    public Object around(ProceedingJoinPoint point, JmsDestination jmsDestination) {
+    public Object around(ProceedingJoinPoint point, JmsDestination jmsDestination) throws NoSuchFieldException, IllegalAccessException {
 
-        System.out.println("++++执行了around方法++++");
+        logger.info("++++执行了around方法++++");
 
-        String destination = jmsDestination.value();
-        //TODO 修改destination，模拟从zk注册中心获取到下发的destination信息，后续可以在这里发起请求注册中心，申请版本号
-        //TODO 是不是每次都要发起查询注册中心？会不会影响性能？要不要做缓存？注册中心更新的时候刷新缓存？
-        destination = destination + "_version";
+        String destinationName = jmsDestination.value();
 
-        //拦截的类名
-        Class clazz = point.getTarget().getClass();
-        //拦截的方法
-        Method method = ((MethodSignature) point.getSignature()).getMethod();
+        //查询注册中心是否已有该destination的版本号，没有需要注册一个版本号，初始值从1开始
+        Version version = destinationService.findDestinationVersionNum(destinationName);
+        if (version == null) {
+            version = new Version(destinationName);
+            //注册version
+            zookeeperService.save(version);
+            //redis保存version
+            destinationService.saveDestinationVersion(version);
 
-        System.out.println("执行了 类:" + clazz + " 方法:" + method + " destination:" + destination);
+            //拦截的类名
+            Class clazz = point.getTarget().getClass();
+            //拦截的方法
+            Method method = ((MethodSignature) point.getSignature()).getMethod();
+            Object[] args = point.getArgs();
+            for (Object argument : args) {
+                if (argument instanceof Topic) {
+                    //获取 jmsDestination 这个代理实例所持有的 InvocationHandler
+                    InvocationHandler invocationHandler = Proxy.getInvocationHandler(argument);
+                    // 获取 AnnotationInvocationHandler 的 memberValues 字段
+                    Field field = invocationHandler.getClass().getDeclaredField("memberValues");
+                    // 因为这个字段事 private final 修饰，所以要打开权限
+                    field.setAccessible(true);
+                    // 获取 memberValues
+                    Map memberValues = (Map) field.get(invocationHandler);
+                    // 修改 value 属性值
+                    memberValues.put("value", version.uniformDestiantionName());
+                }
+            }
+            logger.info("{}类，执行了方法{}，destination完整路径：{}", clazz, method, version.getPath());
+        }
 
         try {
             //执行程序
@@ -71,6 +115,6 @@ public class DestinationAspect {
 
 
     private String customizedDestination(String destination){
-        return DefaultUtils.EMPTY_STRING;
+        return CommonUtils.EMPTY_STRING;
     }
 }

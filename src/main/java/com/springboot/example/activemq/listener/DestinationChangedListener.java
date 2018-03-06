@@ -1,4 +1,4 @@
-package com.springboot.example.zookeeper.listener;
+package com.springboot.example.activemq.listener;
 
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.recipes.cache.TreeCacheEvent;

@@ -1,4 +1,4 @@
-package com.springboot.example.zookeeper.init;
+package com.springboot.example.activemq.init;
 
 import org.apache.curator.RetryPolicy;
 import org.apache.curator.framework.CuratorFramework;
