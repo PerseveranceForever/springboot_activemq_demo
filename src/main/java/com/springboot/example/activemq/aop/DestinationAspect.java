@@ -18,7 +18,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import javax.jms.Destination;
 import javax.jms.Topic;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
@@ -74,7 +73,7 @@ public class DestinationAspect {
         String destinationName = jmsDestination.value();
 
         //查询注册中心是否已有该destination的版本号，没有需要注册一个版本号，初始值从1开始
-        Version version = destinationService.findDestinationVersionNum(destinationName);
+        Version version = destinationService.findDestinationVersion(destinationName);
         if (version == null) {
             version = new Version(destinationName);
             //注册version
@@ -90,7 +89,7 @@ public class DestinationAspect {
             for (Object argument : args) {
                 if (argument instanceof Topic) {
                     //获取 jmsDestination 这个代理实例所持有的 InvocationHandler
-                    InvocationHandler invocationHandler = Proxy.getInvocationHandler(argument);
+                    InvocationHandler invocationHandler = Proxy.getInvocationHandler(jmsDestination);
                     // 获取 AnnotationInvocationHandler 的 memberValues 字段
                     Field field = invocationHandler.getClass().getDeclaredField("memberValues");
                     // 因为这个字段事 private final 修饰，所以要打开权限

@@ -25,4 +25,11 @@ public interface ZookeeperService {
      * @param version
      */
     void delete(Version version);
+
+    /**
+     * 查询节点
+     * @param path
+     * @return
+     */
+    Version find(String path);
 }

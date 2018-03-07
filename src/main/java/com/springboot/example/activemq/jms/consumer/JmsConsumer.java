@@ -1,12 +1,10 @@
-package com.springboot.example.activemq.consumer;
+package com.springboot.example.activemq.jms.consumer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.jms.annotation.JmsListener;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
-
-import javax.jms.Message;
-import javax.jms.MessageListener;
+import javax.jms.*;
 
 /**
  * @Author zhouguanya
@@ -14,12 +12,19 @@ import javax.jms.MessageListener;
  * @Description
  */
 @Component
-public class JmsConsumer implements MessageListener {
+public class JmsConsumer implements MessageListener{
+
     private final static Logger logger = LoggerFactory.getLogger(JmsConsumer.class);
 
-    @JmsListener(destination = "my_test_mq_destination")
+    public JmsConsumer () {
+        logger.info("JmsConsumer初始化");
+    }
+
+    @DependsOn("jmsListenerAspect")
+
     @Override
     public void onMessage(Message message) {
         logger.info("接收到消息：{}",message);
     }
+
 }

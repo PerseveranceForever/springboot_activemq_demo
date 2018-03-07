@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @Date 2018/3/5
  * @Description
  */
-@ToString(of = "path, number")
+@ToString(of = {"path, number"})
 public class Version implements Serializable {
 
     @Getter

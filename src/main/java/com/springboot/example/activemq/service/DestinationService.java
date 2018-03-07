@@ -19,11 +19,13 @@ public interface DestinationService {
      * @param destinationName
      * @return
      */
-    Version findDestinationVersionNum(String destinationName);
+    Version findDestinationVersion(String destinationName);
 
     /**
      * 更新
      * @param version
      */
-    void updateDestinatinVersion(Version version);
+    void updateDestinationVersion(Version version);
+
+    Version initVersion(String destinationName);
 }

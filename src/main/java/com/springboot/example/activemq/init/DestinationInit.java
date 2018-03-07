@@ -42,49 +42,54 @@ public class DestinationInit {
         //开启连接
         curator.start();
 
-        if (curator.checkExists().forPath(zookeeperDestinationPath) == null) {
-            return;
-        }
-        //获取/destination子节点，既是所有的已注册的destination
-        List<String> destinations = curator.getChildren().forPath(zookeeperDestinationPath);
-        logger.info(">>>>>{}下的子节点为{}>>>>>", zookeeperDestinationPath, destinations);
-        if (CollectionUtils.isEmpty(destinations)) {
-            return;
-        }
+        try {
 
-        //得到每个destination的子节点
-        for (String destination : destinations) {
-            String destinationPath;
-            if (zookeeperDestinationPath.endsWith("/")) {
-                destinationPath = new StringBuffer(zookeeperDestinationPath).append(destination).toString();
-            } else {
-                destinationPath = new StringBuffer(zookeeperDestinationPath).append("/").append(destination).toString();
+            if (curator.checkExists().forPath(zookeeperDestinationPath) == null) {
+                return;
             }
-            List<String> destinationVersions = curator.getChildren().forPath(destinationPath);
-            if (CollectionUtils.isEmpty(destinationVersions)) {
-                continue;
+            //获取/destination子节点，既是所有的已注册的destination
+            List<String> destinations = curator.getChildren().forPath(zookeeperDestinationPath);
+            logger.info(">>>>>{}下的子节点为{}>>>>>", zookeeperDestinationPath, destinations);
+            if (CollectionUtils.isEmpty(destinations)) {
+                return;
             }
 
-            //约定每个destination下只有一个版本号节点即：/destination/xxx/version
-            String versionPath;
-            if (destinationPath.endsWith("/")) {
-                versionPath = new StringBuffer(destinationPath).append(destinationVersions.get(0)).toString();
-            } else {
-                versionPath = new StringBuffer(destinationPath).append("/").append(destinationVersions.get(0)).toString();
-            }
-            //每个destination对应的版本号
-            String versionData = new String(curator.getData().forPath(versionPath));
-            try {
-                if (!StringUtils.isEmpty(versionData)) {
-                    Version version = JSON.parseObject(versionData, Version.class);
-                    destinationService.saveDestinationVersion(version);
+            //得到每个destination的子节点
+            for (String destination : destinations) {
+                String destinationPath;
+                if (zookeeperDestinationPath.endsWith("/")) {
+                    destinationPath = new StringBuffer(zookeeperDestinationPath).append(destination).toString();
+                } else {
+                    destinationPath = new StringBuffer(zookeeperDestinationPath).append("/").append(destination).toString();
                 }
-            } catch (Exception e) {
-                logger.error("反序列化Version异常：{}", e);
-            }
+                List<String> destinationVersions = curator.getChildren().forPath(destinationPath);
+                if (CollectionUtils.isEmpty(destinationVersions)) {
+                    continue;
+                }
 
+                //约定每个destination下只有一个版本号节点即：/destination/xxx/version
+                String versionPath;
+                if (destinationPath.endsWith("/")) {
+                    versionPath = new StringBuffer(destinationPath).append(destinationVersions.get(0)).toString();
+                } else {
+                    versionPath = new StringBuffer(destinationPath).append("/").append(destinationVersions.get(0)).toString();
+                }
+                //每个destination对应的版本号
+                String versionData = new String(curator.getData().forPath(versionPath));
+                try {
+                    if (!StringUtils.isEmpty(versionData)) {
+                        Version version = JSON.parseObject(versionData, Version.class);
+                        destinationService.saveDestinationVersion(version);
+                    }
+                } catch (Exception e) {
+                    logger.error("反序列化Version异常：{}", e);
+                }
+
+            }
+        } finally {
+            curator.close();
+            logger.info(">>>>>初始化加载已有destination结束>>>>>");
         }
-        curator.close();
-        logger.info(">>>>>初始化加载已有destination结束>>>>>");
+
     }
 }
