@@ -57,6 +57,7 @@ public class DestinationServiceImpl implements DestinationService {
             ActiveMQQueue destination = new ActiveMQQueue(version.uniformDestiantionName());
             DefaultMessageListenerContainer defaultMessageListenerContainer = (DefaultMessageListenerContainer) defaultMessageListenerContainerObj;
             defaultMessageListenerContainer.setDestination(destination);
+
         }
     }
 

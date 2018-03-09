@@ -25,14 +25,14 @@ public class ConsumerConfig {
     @Resource(name = "destinationService")
     private DestinationService destinationService;
 
-    @Bean("defaultMessageListenerContainer")
-    public DefaultMessageListenerContainer defaultMessageListenerContainer (ConnectionFactory connectionFactory, Destination destination, MessageListener messageListener) {
-        DefaultMessageListenerContainer defaultMessageListenerContainer = new DefaultMessageListenerContainer();
-        defaultMessageListenerContainer.setConnectionFactory(connectionFactory);
-        defaultMessageListenerContainer.setDestination(destination);
-        defaultMessageListenerContainer.setMessageListener(messageListener);
-        return defaultMessageListenerContainer;
-    }
+//    @Bean("defaultMessageListenerContainer")
+//    public DefaultMessageListenerContainer defaultMessageListenerContainer (ConnectionFactory connectionFactory, Destination destination, MessageListener messageListener) {
+//        DefaultMessageListenerContainer defaultMessageListenerContainer = new DefaultMessageListenerContainer();
+//        defaultMessageListenerContainer.setConnectionFactory(connectionFactory);
+//        defaultMessageListenerContainer.setDestination(destination);
+//        defaultMessageListenerContainer.setMessageListener(messageListener);
+//        return defaultMessageListenerContainer;
+//    }
 
     @Bean
     public Destination queueDestination() {
