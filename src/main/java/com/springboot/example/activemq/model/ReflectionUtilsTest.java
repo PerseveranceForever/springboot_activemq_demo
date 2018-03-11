@@ -13,7 +13,7 @@ import java.util.List;
  */
 @Data
 @ToString(of = {"id", "userName", "password"})
-public class User {
+public class ReflectionUtilsTest {
 
     private Long id;
 
