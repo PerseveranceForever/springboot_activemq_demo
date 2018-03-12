@@ -1,0 +1,2 @@
+消息持久化：https://www.cnblogs.com/shihaiming/p/6015825.html
+ActiveMQ Broker发送消息给消费者过程详解：http://donald-draper.iteye.com/blog/2348440

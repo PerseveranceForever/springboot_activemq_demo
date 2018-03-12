@@ -1,7 +1,6 @@
 package com.springboot.example.activemq.model;
 
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -14,7 +13,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @Date 2018/3/5
  * @Description
  */
-@ToString(of = {"path, number"})
+@ToString
 public class Version implements Serializable {
 
     @Getter

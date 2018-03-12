@@ -1,8 +1,5 @@
 package com.springboot.example.activemq.controller;
 
-import com.alibaba.fastjson.JSON;
-import com.springboot.example.activemq.jms.consumer.JmsConsumer;
-import com.springboot.example.activemq.jms.container.SimpleDefaultMessageListenerContainer;
 import com.springboot.example.activemq.model.Message;
 import com.springboot.example.activemq.model.Version;
 import com.springboot.example.activemq.service.DestinationService;
@@ -41,9 +38,6 @@ public class ProducerController {
     @Autowired
     DestinationService destinationService;
 
-    @Autowired
-    SimpleDefaultMessageListenerContainer simpleDefaultMessageListenerContainer;
-
     /**
      * 发送消息
      * @param message
@@ -51,7 +45,7 @@ public class ProducerController {
     @RequestMapping("/message/produce")
     public void send(@RequestBody Message message) {
         String destinationName = message.getVersion().getDestinationName();
-        producer.sendMessage(destinationName, JSON.toJSONString(message));
+//        producer.sendMessage(destinationName, JSON.toJSONString(message));
     }
 
     /**
