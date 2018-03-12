@@ -25,6 +25,8 @@ public class JmsConsumer implements MessageListener, ValidationService{
             TextMessage textMessage = (TextMessage) message;
             try {
                 String text = textMessage.getText();
+                //TODO 由于MessageListener.onMessage不带有返回值，所以消费者调用的时候必须自己手动触发版本号校验。框架代码不好处理
+                validateVersion(message);
                 logger.info("接收到text：{}",text);
             } catch (JMSException e) {
                 logger.error("JMSException:{}", e);
@@ -35,10 +37,6 @@ public class JmsConsumer implements MessageListener, ValidationService{
 
     @Override
     public boolean validateVersion(Message message) {
-        org.apache.activemq.command.Message result = (org.apache.activemq.command.Message) message;
-        ByteSequence byteSequence = result.getContent();
-        String str = new String(byteSequence.getData());
-
         return false;
     }
 }
