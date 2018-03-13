@@ -32,7 +32,6 @@ public class JmsTest {
 
         MessageValidationService validationService = new MyValidateServiceImpl();
         myConsumer.setValidationService(validationService);
-        myConsumer.setConsumer(new MyConsumer());
 
         for (int i=0;i<10;i++) {
             Message message = new Message();
