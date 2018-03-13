@@ -4,15 +4,13 @@ import javax.jms.Message;
 
 /**
  * @Author zhouguanya
- * @Date 2018/3/12
+ * @Date 2018/3/13
  * @Description
  */
-public interface ValidationService {
-
+public interface Consumer {
     /**
-     * 验证消息的版本号
-     * @param message
+     * 消费者客户端实现此接口
      * @return
      */
-    boolean validateVersion(Message message);
+    Object listenAndExecute(Message message);
 }
