@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
 
+import javax.jms.Destination;
+
 /**
  * @Author zhouguanya
  * @Date 2018/3/2
@@ -18,7 +20,7 @@ public class JmsProducer implements Producer {
     private JmsTemplate jmsTemplate;
 
     @Override
-    public void sendMessage(String destinationName, Message message) {
-        this.jmsTemplate.convertAndSend(destinationName,message);
+    public void sendMessage(Destination destination, Message message) {
+        this.jmsTemplate.convertAndSend(destination, message);
     }
 }

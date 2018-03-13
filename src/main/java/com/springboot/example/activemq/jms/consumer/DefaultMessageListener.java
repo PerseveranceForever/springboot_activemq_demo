@@ -3,7 +3,6 @@ package com.springboot.example.activemq.jms.consumer;
 import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.jms.annotation.JmsListener;
 import javax.jms.*;
 import javax.jms.Message;
 
@@ -12,16 +11,24 @@ import javax.jms.Message;
  * @Date 2018/3/2
  * @Description 监听消息
  */
-public class AbstractMessageListener implements MessageListener{
+public class DefaultMessageListener implements MessageListener {
 
-    private final static Logger logger = LoggerFactory.getLogger(AbstractMessageListener.class);
+    private final static Logger logger = LoggerFactory.getLogger(DefaultMessageListener.class);
 
     @Setter
     private Consumer consumer;
     @Setter
     private MessageValidationService validationService;
 
-    @JmsListener(destination = "my_test_mq_destination")
+    public DefaultMessageListener() {
+
+    }
+
+    public DefaultMessageListener(Consumer consumer, MessageValidationService validationService) {
+        this.consumer = consumer;
+        this.validationService = validationService;
+    }
+
     @Override
     public void onMessage(Message message) {
         if (message instanceof TextMessage) {

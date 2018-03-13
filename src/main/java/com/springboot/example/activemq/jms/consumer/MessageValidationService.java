@@ -17,7 +17,7 @@ public interface MessageValidationService {
     boolean validateMessageVersion(Message message);
 
     /**
-     * 预留接口，消费者可以选择实现对消息其他方面的验证
+     * 预留接口，消费者可以选择实现对消息其他方面的验证。比如可以对消息发送日期验证，对消息来源验证
      * @param message
      * @return
      */
