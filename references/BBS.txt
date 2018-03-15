@@ -1,6 +1,20 @@
-消息持久化：https://www.cnblogs.com/shihaiming/p/6015825.html
-ActiveMQ Broker发送消息给消费者过程详解：http://donald-draper.iteye.com/blog/2348440
-Spring事物原理：http://www.importnew.com/12300.html
-kahadb：https://www.cnblogs.com/hapjin/p/5674257.html
-AMQ：http://blog.csdn.net/u014401141/article/details/54772847
-AMQ：http://blog.csdn.net/u014401141/article/category/6670656
+消息持久化：
+    https://www.cnblogs.com/shihaiming/p/6015825.html
+
+ActiveMQ的几种消息持久化机制：
+    https://www.cnblogs.com/binyue/p/5371479.html
+
+ActiveMQ Broker发送消息给消费者过程详解：
+    http://donald-draper.iteye.com/blog/2348440
+
+Spring事物原理：
+    http://www.importnew.com/12300.html
+
+kahadb：
+    https://www.cnblogs.com/hapjin/p/5674257.html
+
+AMQ：
+    http://blog.csdn.net/u014401141/article/details/54772847
+
+AMQ：
+    http://blog.csdn.net/u014401141/article/category/6670656
