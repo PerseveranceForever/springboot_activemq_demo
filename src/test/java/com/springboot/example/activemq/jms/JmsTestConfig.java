@@ -83,6 +83,7 @@ public class JmsTestConfig {
      * @return
      */
     @Bean
+    //TODO 多个messageListener怎么注入？？？@Bean按照名称注入怎么写？？？
     public SimpleMessageListenerContainer getSimpleMessageListenerContainer(ConnectionFactory connectionFactory, MessageListener messageListener) {
         SimpleMessageListenerContainer simpleMessageListenerContainer = new SimpleMessageListenerContainer();
         simpleMessageListenerContainer.setConnectionFactory(connectionFactory);

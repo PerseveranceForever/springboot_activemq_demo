@@ -18,3 +18,17 @@ AMQ：
 
 AMQ：
     http://blog.csdn.net/u014401141/article/category/6670656
+
+LEVELDB：
+    http://leveldb.org/
+    http://blog.csdn.net/linuxheik/article/details/52768223
+
+SSDB：
+    http://ssdb.io/zh_cn/#users
+
+tair：
+    http://tair.taobao.org/
+    https://www.lvtao.net/database/tair.html
+
+Redis：
+    http://blog.csdn.net/laomoluhaitao/article/details/78547919
