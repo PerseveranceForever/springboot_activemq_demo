@@ -32,3 +32,6 @@ tair：
 
 Redis：
     http://blog.csdn.net/laomoluhaitao/article/details/78547919
+
+阿里中间件团队博客：
+    http://jm.taobao.org/2016/04/01/kafka-vs-rabbitmq-vs-rocketmq-message-send-performance/
