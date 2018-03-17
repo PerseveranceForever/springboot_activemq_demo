@@ -33,5 +33,10 @@ tair：
 Redis：
     http://blog.csdn.net/laomoluhaitao/article/details/78547919
 
+Ehcache:
+    http://blog.csdn.net/linlzk/article/details/47315805
+    http://blog.csdn.net/mawming/article/details/52171510
+    http://blog.csdn.net/vbirdbest/article/details/72763048
+
 阿里中间件团队博客：
     http://jm.taobao.org/2016/04/01/kafka-vs-rabbitmq-vs-rocketmq-message-send-performance/
