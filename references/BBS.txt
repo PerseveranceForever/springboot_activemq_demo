@@ -40,3 +40,6 @@ Ehcache:
 
 阿里中间件团队博客：
     http://jm.taobao.org/2016/04/01/kafka-vs-rabbitmq-vs-rocketmq-message-send-performance/
+
+Zookeeper：
+    https://www.cnblogs.com/wuxl360/p/5817471.html

@@ -27,9 +27,16 @@ public class EhCacheConfiguration implements CachingConfigurer {
         cacheConfiguration.setName("HelloWorldCache");
         cacheConfiguration.setMemoryStoreEvictionPolicy("LRU");
         cacheConfiguration.setMaxEntriesLocalHeap(1000);
+
+        CacheConfiguration destinationConfig = new CacheConfiguration();
+        destinationConfig.setName("destinationConfCache");
+        destinationConfig.setMemoryStoreEvictionPolicy("LRU");
+        destinationConfig.setMaxEntriesLocalHeap(1000);
+
         net.sf.ehcache.config.Configuration config = new net.sf.ehcache.config.Configuration();
         //可以创建多个cacheConfiguration，都添加到Config中
         config.addCache(cacheConfiguration);
+        config.addCache(destinationConfig);
         return net.sf.ehcache.CacheManager.newInstance(config);
     }
 
