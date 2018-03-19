@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Configuration;
  * @Author zhouguanya
  * @Date 2018/3/17
  * @Description EhCache配置文件，可以替代ehcache.xml 文件
+ * http://blog.csdn.net/xufan007/article/details/52163127
  */
 @Configuration
 @EnableCaching
