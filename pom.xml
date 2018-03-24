@@ -6,7 +6,11 @@
 	<groupId>com.springboot.messagesystem</groupId>
 	<artifactId>messagesystem</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<modules>
+		<module>core</module>
+		<module>console</module>
+	</modules>
+	<packaging>pom</packaging>
 
 	<name>messagesystem</name>
 	<description>messagesystem parent</description>
